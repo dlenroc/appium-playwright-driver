@@ -1,7 +1,6 @@
-import { Element } from 'appium-base-driver';
-import { Driver } from '../Driver';
+import type { Driver } from '../Driver';
 
-export async function getName(this: Driver, element: Element): Promise<string> {
+export async function getName(this: Driver, element: string): Promise<string> {
   const tagName = await this.getProperty('tagName', element);
   return tagName.toLowerCase();
 }

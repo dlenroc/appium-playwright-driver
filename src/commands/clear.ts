@@ -1,7 +1,6 @@
-import { Driver } from '../Driver';
-import { Element } from 'appium-base-driver';
+import type { Driver } from '../Driver';
 
-export async function clear(this: Driver, element: Element): Promise<void> {
+export async function clear(this: Driver, element: string): Promise<void> {
   await this.handlePrompts();
 
   const elementHandle = await this.getElement(element);

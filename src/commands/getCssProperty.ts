@@ -1,7 +1,6 @@
-import { Element } from 'appium-base-driver';
-import { Driver } from '../Driver';
+import type { Driver } from '../Driver';
 
-export async function getCssProperty(this: Driver, property: string, element: Element): Promise<any> {
+export async function getCssProperty(this: Driver, property: string, element: string): Promise<any> {
   await this.handlePrompts();
 
   const elementHandle = await this.getElement(element);

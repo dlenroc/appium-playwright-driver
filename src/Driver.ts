@@ -1,14 +1,16 @@
 /// <reference path='../types/appium-support.d.ts'/>
 /// <reference path='../types/appium-base-driver.d.ts'/>
 
-import { BaseDriver, errors, OmitFirstArg } from 'appium-base-driver';
-import { logger } from 'appium-support';
-import { Browser as State } from './types';
+import { BaseDriver } from '@appium/base-driver';
+import { active } from './commands/active';
 import { back } from './commands/back';
 import { clear } from './commands/clear';
 import { click } from './commands/click';
 import { closeWindow } from './commands/closeWindow';
 import { createSession } from './commands/createSession';
+import { createWindow } from './commands/createWindow';
+import { deleteCookie } from './commands/deleteCookie';
+import { deleteCookies } from './commands/deleteCookies';
 import { deleteSession } from './commands/deleteSession';
 import { elementDisplayed } from './commands/elementDisplayed';
 import { elementEnabled } from './commands/elementEnabled';
@@ -17,53 +19,50 @@ import { execute } from './commands/execute';
 import { executeAsync } from './commands/executeAsync';
 import { findElOrEls, getElement } from './commands/findElOrEls';
 import { forward } from './commands/forward';
+import { fullScreenWindow } from './commands/fullScreenWindow';
+import { getAlertText } from './commands/getAlertText';
 import { getAttribute } from './commands/getAttribute';
+import { getComputedLabel } from './commands/getComputedLabel';
+import { getComputedRole } from './commands/getComputedRole';
+import { getCookie } from './commands/getCookie';
 import { getCookies } from './commands/getCookies';
 import { getCssProperty } from './commands/getCssProperty';
 import { getElementRect } from './commands/getElementRect';
+import { getElementScreenshot } from './commands/getElementScreenshot';
 import { getName } from './commands/getName';
 import { getPageSource } from './commands/getPageSource';
+import { getProperty } from './commands/getProperty';
 import { getScreenshot } from './commands/getScreenshot';
 import { getText } from './commands/getText';
+import { getTimeouts } from './commands/getTimeouts';
 import { getUrl } from './commands/getUrl';
 import { getWindowHandle } from './commands/getWindowHandle';
 import { getWindowHandles } from './commands/getWindowHandles';
+import { getWindowRect } from './commands/getWindowRect';
+import { implicitWaitW3C } from './commands/implicitWaitW3C';
 import { maximizeWindow } from './commands/maximizeWindow';
+import { minimizeWindow } from './commands/minimizeWindow';
+import { pageLoadTimeoutW3C } from './commands/pageLoadTimeoutW3C';
 import { parentFrame } from './commands/parentFrame';
 import { performActions } from './commands/performActions';
+import { postAcceptAlert } from './commands/postAcceptAlert';
+import { postDismissAlert } from './commands/postDismissAlert';
+import { printPage } from './commands/printPage';
 import { refresh } from './commands/refresh';
+import { releaseActions } from './commands/releaseActions';
+import { scriptTimeoutW3C } from './commands/scriptTimeoutW3C';
+import { setAlertText } from './commands/setAlertText';
 import { setCookie } from './commands/setCookie';
 import { setFrame } from './commands/setFrame';
 import { setUrl } from './commands/setUrl';
 import { setValue } from './commands/setValue';
 import { setWindow } from './commands/setWindow';
-import { title } from './commands/title';
-import { active } from './commands/active';
-import { createWindow } from './commands/createWindow';
-import { deleteCookie } from './commands/deleteCookie';
-import { deleteCookies } from './commands/deleteCookies';
-import { fullScreenWindow } from './commands/fullScreenWindow';
-import { getAlertText } from './commands/getAlertText';
-import { getComputedLabel } from './commands/getComputedLabel';
-import { getComputedRole } from './commands/getComputedRole';
-import { getCookie } from './commands/getCookie';
-import { getElementScreenshot } from './commands/getElementScreenshot';
-import { getProperty } from './commands/getProperty';
-import { getTimeouts } from './commands/getTimeouts';
-import { getWindowRect } from './commands/getWindowRect';
-import { minimizeWindow } from './commands/minimizeWindow';
-import { postAcceptAlert } from './commands/postAcceptAlert';
-import { postDismissAlert } from './commands/postDismissAlert';
-import { printPage } from './commands/printPage';
-import { releaseActions } from './commands/releaseActions';
-import { setAlertText } from './commands/setAlertText';
 import { setWindowRect } from './commands/setWindowRect';
-import { implicitWaitW3C } from './commands/implicitWaitW3C';
-import { pageLoadTimeoutW3C } from './commands/pageLoadTimeoutW3C';
-import { scriptTimeoutW3C } from './commands/scriptTimeoutW3C';
-import { handleWindow } from './handlers/handleWindow';
-import { handlePrompts } from './handlers/handlePrompts';
+import { title } from './commands/title';
 import { uploadFile } from './commands/uploadFile';
+import { handlePrompts } from './handlers/handlePrompts';
+import { handleWindow } from './handlers/handleWindow';
+import { Browser as State } from './types';
 
 export class Driver extends BaseDriver {
   static newMethodMap = {
@@ -95,11 +94,9 @@ export class Driver extends BaseDriver {
     },
   };
 
-  public errors = errors;
-  public logger = logger.getLogger('PlaywrightDriver');
-
   // @ts-ignore because is initialized in `createSession`
   public state: State;
+  public WEB_ELEMENT_IDENTIFIER: 'element-6066-11e4-a52e-4f735466cecf' = 'element-6066-11e4-a52e-4f735466cecf';
 
   // handlers
   public handleWindow = handleWindow;
@@ -114,8 +111,8 @@ export class Driver extends BaseDriver {
   public createWindow = createWindow;
   public deleteCookie = deleteCookie;
   public deleteCookies = deleteCookies;
-  public createSession: OmitFirstArg<typeof createSession> = createSession.bind(this, this.createSession.bind(this));
-  public deleteSession: OmitFirstArg<typeof deleteSession> = deleteSession.bind(this, this.deleteSession.bind(this));
+  public createSession = createSession.bind(this, super.createSession.bind(this));
+  public deleteSession = deleteSession.bind(this, super.deleteSession.bind(this));
   public elementDisplayed = elementDisplayed;
   public elementEnabled = elementEnabled;
   public elementSelected = elementSelected;
@@ -149,7 +146,7 @@ export class Driver extends BaseDriver {
   public minimizeWindow = minimizeWindow;
   public pageLoadTimeoutW3C = pageLoadTimeoutW3C;
   public parentFrame = parentFrame;
-  public performActions = performActions;
+  public performActions = performActions as BaseDriver['performActions'];
   public postAcceptAlert = postAcceptAlert;
   public postDismissAlert = postDismissAlert;
   public printPage = printPage;
@@ -167,36 +164,39 @@ export class Driver extends BaseDriver {
   public uploadFile = uploadFile;
 
   // Configurations
-  protected locatorStrategies = ['id', 'tag name', 'link text', 'partial link text', 'css selector', 'xpath'];
-  protected desiredCapConstraints = {
-    // W3C
-    timeouts: {
-      isObject: true,
-      presence: false,
-    },
-    acceptInsecureCerts: {
-      isBoolean: true,
-      presence: false,
-    },
-    pageLoadStrategy: {
-      isString: true,
-      presence: false,
-      inclusion: ['none', 'eager', 'normal', 'networkidle'],
-    },
-    unhandledPromptBehavior: {
-      isString: true,
-      presence: false,
-      inclusion: ['dismiss', 'accept', 'dismiss and notify', 'accept and notify', 'ignore'],
-    },
+  locatorStrategies = ['id', 'tag name', 'link text', 'partial link text', 'css selector', 'xpath'];
 
-    // Playwright
-    'playwright:browser': {
-      isObject: true,
-      presence: false,
-    },
-    'playwright:context': {
-      isObject: true,
-      presence: false,
-    },
-  };
+  public get desiredCapConstraints() {
+    return {
+      // W3C
+      timeouts: {
+        isObject: true,
+        presence: false,
+      },
+      acceptInsecureCerts: {
+        isBoolean: true,
+        presence: false,
+      },
+      pageLoadStrategy: {
+        isString: true,
+        presence: false,
+        inclusion: ['none', 'eager', 'normal', 'networkidle'],
+      },
+      unhandledPromptBehavior: {
+        isString: true,
+        presence: false,
+        inclusion: ['dismiss', 'accept', 'dismiss and notify', 'accept and notify', 'ignore'],
+      },
+
+      // Playwright
+      'playwright:browser': {
+        isObject: true,
+        presence: false,
+      },
+      'playwright:context': {
+        isObject: true,
+        presence: false,
+      },
+    };
+  }
 }

@@ -1,13 +1,14 @@
-import { Cookie } from 'playwright';
-import { Driver } from '../Driver';
+import type { Cookie } from '@appium/base-driver';
+import { errors } from '@appium/base-driver';
+import type { Driver } from '../Driver';
 
 export async function getCookie(this: Driver, name: string): Promise<Cookie> {
   const cookies = await this.getCookies();
   const cookie = cookies.find((cookie) => cookie.name == name);
 
   if (!cookie) {
-    throw new this.errors.NoSuchCookieError();
+    throw new errors.NoSuchCookieError();
   }
 
-  return cookie;
+  return cookie as Cookie;
 }

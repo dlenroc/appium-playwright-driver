@@ -1,5 +1,5 @@
-import { Driver } from '../Driver';
 import rimraf from 'rimraf';
+import type { Driver } from '../Driver';
 
 export async function deleteSession(this: Driver, deleteSession?: any): Promise<void> {
   await deleteSession();

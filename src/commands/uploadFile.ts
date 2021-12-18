@@ -1,12 +1,13 @@
-import { Driver } from '../Driver';
-import JSZip from 'jszip';
+import { errors } from '@appium/base-driver';
 import fs from 'fs';
+import JSZip from 'jszip';
+import type { Driver } from '../Driver';
 
 export async function uploadFile(this: Driver, base64File: string): Promise<string> {
   const zip = await JSZip.loadAsync(base64File, { base64: true });
   const files = Object.values(zip.files);
   if (files.length !== 1) {
-    throw new this.errors.InvalidArgumentError('Only 1 file upload per call is allowed');
+    throw new errors.InvalidArgumentError('Only 1 file upload per call is allowed');
   }
 
   const file = files[0];

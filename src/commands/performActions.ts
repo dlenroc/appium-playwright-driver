@@ -1,8 +1,9 @@
 /// <reference path='../../types/asyncbox.d.ts'/>
 
-import { Element } from 'appium-base-driver';
+import type { Element } from '@appium/base-driver';
+import { errors } from '@appium/base-driver';
 import { longSleep } from 'asyncbox';
-import { Driver } from '../Driver';
+import type { Driver } from '../Driver';
 
 type Action = Key | Pointer;
 
@@ -124,7 +125,7 @@ export async function performActions(this: Driver, actions: Action[]): Promise<v
     } else if (action.type === 'pointer') {
       await performPointerActions(this, action);
     } else {
-      throw new this.errors.InvalidArgumentError(`Unsupported action: ${action}`);
+      throw new errors.InvalidArgumentError(`Unsupported action: ${action}`);
     }
   }
 }
@@ -160,7 +161,7 @@ async function performPointerActions(driver: Driver, pointer: Pointer): Promise<
       } else if (action.button === 2) {
         button = 'right';
       } else {
-        throw new driver.errors.InvalidArgumentError(`Unsupported pointer button ${action.button}`);
+        throw new errors.InvalidArgumentError(`Unsupported pointer button ${action.button}`);
       }
     }
 
@@ -170,7 +171,7 @@ async function performPointerActions(driver: Driver, pointer: Pointer): Promise<
           await page.current.mouse.move(action.x, action.y);
         } else {
           let position = action.x || action.y ? { x: action.x, y: action.y } : undefined;
-          const element = await driver.getElement(action.origin);
+          const element = await driver.getElement(action.origin[driver.WEB_ELEMENT_IDENTIFIER]);
           await element.hover({ force: true, position });
         }
         break;

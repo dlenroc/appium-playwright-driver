@@ -1,7 +1,6 @@
-import { Driver } from '../Driver';
-import { Element } from 'appium-base-driver';
+import type { Driver } from '../Driver';
 
-export async function click(this: Driver, element: Element): Promise<void> {
+export async function click(this: Driver, element: string): Promise<void> {
   await this.handlePrompts();
 
   const tagName = await this.getName(element);

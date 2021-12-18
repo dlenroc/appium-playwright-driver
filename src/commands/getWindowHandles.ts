@@ -1,4 +1,4 @@
-import { Driver } from '../Driver';
+import type { Driver } from '../Driver';
 
 export async function getWindowHandles(this: Driver): Promise<string[]> {
   const { context } = await this.handlePrompts();

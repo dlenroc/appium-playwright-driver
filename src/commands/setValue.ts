@@ -1,23 +1,23 @@
-import { Element } from 'appium-base-driver';
-import { Driver } from '../Driver';
+import type { Driver } from '../Driver';
 import { SPECIAL_SYMBOLS } from './performActions';
 
-export async function setValue(this: Driver, chars: string[], element: Element): Promise<void> {
+export async function setValue(this: Driver, chars: string | string[], element: string): Promise<void> {
   await this.handlePrompts();
 
+  const value = Array.isArray(chars) ? chars.join('') : chars;
   const type = await this.getProperty('type', element);
   const elementHandle = await this.getElement(element);
 
   // Upload Files
   if (type === 'file') {
-    const files = chars.join('').split('\n');
+    const files = value.split('\n');
     await elementHandle.setInputFiles(files);
     return;
   }
 
   // Send text / keys
   let text = '';
-  chars = chars.reverse();
+  chars = value.split('').reverse();
   while (chars.length) {
     const char = chars.pop();
 
