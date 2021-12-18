@@ -1,7 +1,6 @@
-import { Element } from 'appium-base-driver';
-import { Driver } from '../Driver';
+import type { Driver } from '../Driver';
 
-export async function getAttribute(this: Driver, attribute: string, element: Element): Promise<string | null> {
+export async function getAttribute(this: Driver, attribute: string, element: string): Promise<string | null> {
   await this.handlePrompts();
 
   const elementHandle = await this.getElement(element);

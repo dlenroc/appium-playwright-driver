@@ -1,7 +1,8 @@
-import { Driver } from '../Driver';
+import type { Cookie } from 'playwright';
+import type { Driver } from '../Driver';
 
 export async function deleteCookie(this: Driver, name: string): Promise<void> {
-  const cookies = await this.getCookies();
+  const cookies = (await this.getCookies()) as Cookie[];
   const deleteCookies = [];
 
   for (const cookie of cookies) {

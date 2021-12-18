@@ -1,6 +1,7 @@
-import { Driver } from '../Driver';
+import type { Rect } from '@appium/base-driver';
+import type { Driver } from '../Driver';
 
-export async function minimizeWindow(this: Driver): Promise<void> {
+export async function minimizeWindow(this: Driver): Promise<Rect> {
   const { page } = await this.handlePrompts();
 
   await page.current.evaluate(() => {
@@ -19,4 +20,6 @@ export async function minimizeWindow(this: Driver): Promise<void> {
     // @ts-ignore
     document.dispatchEvent(new Event('visibilitychange'));
   });
+
+  return this.getWindowRect();
 }

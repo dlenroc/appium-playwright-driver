@@ -1,4 +1,4 @@
-import { Driver } from '../Driver';
+import type { Driver } from '../Driver';
 
 export async function printPage(this: Driver, options: any): Promise<string> {
   const { page } = await this.handlePrompts();

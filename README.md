@@ -1,6 +1,6 @@
 # Playwright Driver · [![NPM Version](https://img.shields.io/npm/v/@dlenroc/appium-playwright-driver?cacheSeconds=86400)](https://www.npmjs.com/package/@dlenroc/appium-playwright-driver) ![Node.js Version](https://img.shields.io/node/v/@dlenroc/appium-playwright-driver) [![Node.js CI](https://github.com/dlenroc/appium-playwright-driver/actions/workflows/nodejs.yml/badge.svg?branch=main)](https://github.com/dlenroc/appium-playwright-driver/actions/workflows/nodejs.yml)
 
-Appium Playwright is a W3C WebDriver that allows you to use Playwright through any WebDriver client. If you are interested in the project `Star`-it, or if you have found a problem, please report or suggest a solution for it
+Playwright Driver is a W3C WebDriver that allows you to use Playwright through any WebDriver client
 
 <p align="center">
   <img width="400" src="https://user-images.githubusercontent.com/18662534/131267151-09ddcd1f-a7e7-41f4-86ec-e0ca097a6dee.png">
@@ -56,8 +56,8 @@ npx appium@next server
 
 ### Playwright Capabilities
 
-| Capability          | Required |  Type  | Description                                                                                                                                |
-| ------------------- | :------: | :----: | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Capability           | Required |  Type  | Description                                                                                                                                |
+| -------------------- | :------: | :----: | ------------------------------------------------------------------------------------------------------------------------------------------ |
 | `playwright:browser` |    -     | object | Browser launch options, see [`browserType.launch`](https://playwright.dev/docs/next/api/class-browsertype#browser-type-launch) for details |
 | `playwright:context` |    -     | object | Browser context options, see [`browser.newContext`](https://playwright.dev/docs/next/api/class-browser#browser-new-context) for details    |
 

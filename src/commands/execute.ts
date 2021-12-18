@@ -1,5 +1,5 @@
 import { util } from 'appium-support';
-import { Driver } from '../Driver';
+import type { Driver } from '../Driver';
 
 export async function execute(this: Driver, script: string, args: any[]): Promise<any> {
   const { page } = await this.handlePrompts();

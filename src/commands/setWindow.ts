@@ -1,4 +1,5 @@
-import { Driver } from '../Driver';
+import { errors } from '@appium/base-driver';
+import type { Driver } from '../Driver';
 
 export async function setWindow(this: Driver, handle: string): Promise<void> {
   const { context } = await this.handlePrompts();
@@ -12,5 +13,5 @@ export async function setWindow(this: Driver, handle: string): Promise<void> {
     }
   }
 
-  throw new this.errors.NoSuchWindowError();
+  throw new errors.NoSuchWindowError();
 }

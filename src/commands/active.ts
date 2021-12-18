@@ -1,7 +1,8 @@
-import { Element } from 'appium-base-driver';
+import type { Element } from '@appium/base-driver';
+import { errors } from '@appium/base-driver';
 import { util } from 'appium-support';
 import base64 from 'base-64';
-import { Driver } from '../Driver';
+import type { Driver } from '../Driver';
 
 export async function active(this: Driver): Promise<Element> {
   const { page } = await this.handlePrompts();
@@ -9,7 +10,7 @@ export async function active(this: Driver): Promise<Element> {
   // @ts-ignore
   let elementHandle = await page.frame.evaluateHandle(() => document.activeElement);
   if (!elementHandle) {
-    throw new this.errors.NoSuchElementError();
+    throw new errors.NoSuchElementError();
   }
 
   // @ts-ignore because `_guid` is an internal property

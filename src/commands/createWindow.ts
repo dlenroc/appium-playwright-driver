@@ -1,4 +1,4 @@
-import { Driver } from '../Driver';
+import type { Driver } from '../Driver';
 
 export async function createWindow(this: Driver, type: string): Promise<{ type: string; handle: string }> {
   const { context } = await this.handlePrompts();

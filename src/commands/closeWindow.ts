@@ -1,4 +1,4 @@
-import { Driver } from '../Driver';
+import type { Driver } from '../Driver';
 
 export async function closeWindow(this: Driver): Promise<string[]> {
   const { context, page } = await this.handlePrompts();

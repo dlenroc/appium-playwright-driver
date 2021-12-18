@@ -1,7 +1,6 @@
-import { Element } from 'appium-base-driver';
-import { Driver } from '../Driver';
+import type { Driver } from '../Driver';
 
-export async function elementDisplayed(this: Driver, element: Element): Promise<boolean> {
+export async function elementDisplayed(this: Driver, element: string): Promise<boolean> {
   await this.handlePrompts();
 
   const elementHandle = await this.getElement(element);

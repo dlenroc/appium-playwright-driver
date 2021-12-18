@@ -1,6 +1,6 @@
-import { Cookie } from 'playwright';
+import type { Cookie } from '@appium/base-driver';
 import { URL } from 'url';
-import { Driver } from '../Driver';
+import type { Driver } from '../Driver';
 
 export async function setCookie(this: Driver, cookie: Cookie): Promise<void> {
   const { context, page } = await this.handlePrompts();

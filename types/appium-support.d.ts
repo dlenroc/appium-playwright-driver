@@ -1,5 +1,5 @@
 declare module 'appium-support' {
-  import { Element } from 'appium-base-driver';
+  import { Element } from '@appium/base-driver';
 
   namespace logger {
     function getLogger(name: string): {
@@ -18,6 +18,6 @@ declare module 'appium-support' {
   namespace util {
     function wrapElement(el: string): Element;
 
-    function unwrapElement(el: Element): string;
+    function unwrapElement(el: string): string;
   }
 }

@@ -1,11 +1,11 @@
 /// <reference path='../../types/requireg.d.ts'/>
 
-import { Driver } from '../Driver';
-import { Browser, BrowserContextOptions, BrowserType, Dialog } from 'playwright';
-import { Context, Page } from '../types';
-import requireg from 'requireg';
-import path from 'path';
 import fs from 'fs';
+import path from 'path';
+import type { Dialog } from 'playwright';
+import requireg from 'requireg';
+import type { Driver } from '../Driver';
+import type { Context, Page } from '../types';
 
 const playwright = requireg('playwright');
 

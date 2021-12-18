@@ -1,26 +1,27 @@
-import { Element, SelectorStrategy } from 'appium-base-driver';
+import type { Element, SelectorStrategy } from '@appium/base-driver';
+import { errors } from '@appium/base-driver';
 import { util } from 'appium-support';
-import { ElementHandle } from 'playwright';
-import { Driver } from '../Driver';
 import * as base64 from 'base-64';
+import type { ElementHandle } from 'playwright';
+import type { Driver } from '../Driver';
 
-export async function getElement(this: Driver, element: Element): Promise<ElementHandle> {
+export async function getElement(this: Driver, element: string): Promise<ElementHandle> {
   const id = util.unwrapElement(element);
   const elementHandler = this.state.context.page!.elements[id];
   if (!elementHandler) {
-    throw new this.errors.StaleElementReferenceError('Element is not part of the document page');
+    throw new errors.StaleElementReferenceError('Element is not part of the document page');
   }
 
   const isConnected = await elementHandler.evaluate((e) => e.isConnected).catch(() => false);
   if (!isConnected) {
     delete this.state.context.page!.elements[id];
-    throw new this.errors.StaleElementReferenceError('Element is not attached to the page document');
+    throw new errors.StaleElementReferenceError('Element is not attached to the page document');
   }
 
   return elementHandler;
 }
 
-export async function findElOrEls<T extends boolean = false>(this: Driver, strategy: SelectorStrategy, selector: string, multiple?: T, parent?: Element): Promise<T extends true ? Element[] : Element> {
+export async function findElOrEls<T extends boolean = false>(this: Driver, strategy: SelectorStrategy, selector: string, multiple?: T, parent?: string): Promise<T extends true ? Element[] : Element> {
   switch (strategy) {
     case 'id':
       selector = `id=${selector}`;
@@ -49,7 +50,7 @@ export async function findElOrEls<T extends boolean = false>(this: Driver, strat
 
   const elementOrElements = multiple ? await parentElement.$$(selector) : await parentElement.$(selector);
   if (!elementOrElements) {
-    throw new this.errors.NoSuchElementError(`Unable to locate element: ${selector}`);
+    throw new errors.NoSuchElementError(`Unable to locate element: ${selector}`);
   }
 
   if (Array.isArray(elementOrElements)) {
