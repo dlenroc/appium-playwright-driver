@@ -1,4 +1,4 @@
-import type { Rect } from '@appium/base-driver';
+import type { Rect } from '@appium/types';
 import type { Driver } from '../Driver';
 
 export async function setWindowRect(this: Driver, x: number, y: number, width: number, height: number): Promise<Rect> {

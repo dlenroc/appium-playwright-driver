@@ -1,4 +1,4 @@
-import type { Element, SelectorStrategy } from '@appium/base-driver';
+import type { Element } from '@appium/types';
 import { errors } from '@appium/base-driver';
 import { util } from 'appium-support';
 import * as base64 from 'base-64';
@@ -21,7 +21,7 @@ export async function getElement(this: Driver, element: string): Promise<Element
   return elementHandler;
 }
 
-export async function findElOrEls<T extends boolean = false>(this: Driver, strategy: SelectorStrategy, selector: string, multiple?: T, parent?: string): Promise<T extends true ? Element[] : Element> {
+export async function findElOrEls(this: Driver, strategy: string, selector: string, multiple?: boolean, parent?: string): Promise<Element[] | Element> {
   switch (strategy) {
     case 'id':
       selector = `id=${selector}`;

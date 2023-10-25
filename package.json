@@ -1,6 +1,6 @@
 {
   "name": "@dlenroc/appium-playwright-driver",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Appium Playwright Driver",
   "author": "Corneliu Duplachi",
   "repository": "dlenroc/appium-playwright-driver",
@@ -10,15 +10,15 @@
     "driver"
   ],
   "license": "MIT",
+  "type": "commonjs",
   "main": "dist/index.js",
   "types": "src/index.ts",
   "scripts": {
-    "build": "rollup -c",
-    "watch": "rollup -c -w",
+    "build": "tsc",
     "prepare": "npm run build"
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=18"
   },
   "appium": {
     "mainClass": "Driver",
@@ -31,21 +31,16 @@
     ]
   },
   "dependencies": {
-    "@appium/base-driver": "^8.2.2",
-    "appium-support": "^2.54.4",
-    "asyncbox": "^2.9.2",
+    "@appium/base-driver": "^9.4.1",
+    "appium-support": "^2.55.0",
+    "asyncbox": "^2.9.4",
     "base-64": "^1.0.0",
-    "jszip": "^3.7.1",
-    "requireg": "^0.2.2",
-    "rimraf": "^3.0.2"
+    "jszip": "^3.10.1",
+    "requireg": "^0.2.2"
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^13.1.1",
-    "@types/base-64": "^1.0.0",
-    "@types/rimraf": "^3.0.2",
-    "playwright": "^1.17.1",
-    "rollup": "^2.61.1",
-    "rollup-plugin-typescript2": "^0.31.1",
-    "typescript": "^4.5.4"
+    "@types/base-64": "^1.0.1",
+    "playwright": "^1.39.0",
+    "typescript": "^5.2.2"
   }
 }

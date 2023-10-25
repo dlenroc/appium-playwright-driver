@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist",
     "sourceMap": true,
+    "declaration": true,
     "removeComments": true,
+    "module": "CommonJS",
     "moduleResolution": "Node",
     "lib": ["ES2019"],
     "target": "ES2019",

@@ -1,6 +1,6 @@
 /// <reference path='../../types/asyncbox.d.ts'/>
 
-import type { Element } from '@appium/base-driver';
+import type { Element } from '@appium/types';
 import { errors } from '@appium/base-driver';
 import { longSleep } from 'asyncbox';
 import type { Driver } from '../Driver';

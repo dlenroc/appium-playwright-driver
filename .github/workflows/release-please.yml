@@ -19,7 +19,7 @@ jobs:
       - uses: actions/setup-node@v2
         if: ${{ steps.release.outputs.release_created }}
         with:
-          node-version: 14
+          node-version: 18.x
           registry-url: https://registry.npmjs.org
       - run: npm install
         if: ${{ steps.release.outputs.release_created }}

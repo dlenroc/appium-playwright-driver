@@ -8,16 +8,9 @@ Playwright Driver is a W3C WebDriver that allows you to use Playwright through a
 
 ## Installation
 
-Install `playwright` (if not installed)
-
 ```sh
-npm install -g playwright
-```
-
-Install `playwright-driver` driver
-
-```sh
-npx appium@next driver install --source npm @dlenroc/appium-playwright-driver
+npm install # or yarn install
+appium driver install --source local "$(pwd)"
 
 # Output
 #   Driver playwright@<versio> successfully installed
@@ -28,7 +21,7 @@ npx appium@next driver install --source npm @dlenroc/appium-playwright-driver
 Run Appium
 
 ```sh
-npx appium@next server
+appium server
 
 # Output:
 #   Appium REST http interface listener started on 0.0.0.0:4723

@@ -64,7 +64,7 @@ import { handlePrompts } from './handlers/handlePrompts';
 import { handleWindow } from './handlers/handleWindow';
 import { Browser as State } from './types';
 
-export class Driver extends BaseDriver {
+export class Driver extends BaseDriver<any> {
   static newMethodMap = {
     '/session/:sessionId/print': {
       POST: { command: 'printPage', payloadParams: { required: ['options'] } },
@@ -111,14 +111,14 @@ export class Driver extends BaseDriver {
   public createWindow = createWindow;
   public deleteCookie = deleteCookie;
   public deleteCookies = deleteCookies;
-  public createSession = createSession.bind(this, super.createSession.bind(this));
+  public createSession = createSession.bind(this, super.createSession.bind(this)) as any;
   public deleteSession = deleteSession.bind(this, super.deleteSession.bind(this));
   public elementDisplayed = elementDisplayed;
   public elementEnabled = elementEnabled;
   public elementSelected = elementSelected;
   public execute = execute;
   public executeAsync = executeAsync;
-  public findElOrEls = findElOrEls;
+  public findElOrEls = findElOrEls as any;
   public forward = forward;
   public fullScreenWindow = fullScreenWindow;
   public getAlertText = getAlertText;
@@ -146,7 +146,7 @@ export class Driver extends BaseDriver {
   public minimizeWindow = minimizeWindow;
   public pageLoadTimeoutW3C = pageLoadTimeoutW3C;
   public parentFrame = parentFrame;
-  public performActions = performActions as BaseDriver['performActions'];
+  public performActions = performActions;
   public postAcceptAlert = postAcceptAlert;
   public postDismissAlert = postDismissAlert;
   public printPage = printPage;
@@ -166,37 +166,35 @@ export class Driver extends BaseDriver {
   // Configurations
   locatorStrategies = ['id', 'tag name', 'link text', 'partial link text', 'css selector', 'xpath'];
 
-  public get desiredCapConstraints() {
-    return {
-      // W3C
-      timeouts: {
-        isObject: true,
-        presence: false,
-      },
-      acceptInsecureCerts: {
-        isBoolean: true,
-        presence: false,
-      },
-      pageLoadStrategy: {
-        isString: true,
-        presence: false,
-        inclusion: ['none', 'eager', 'normal', 'networkidle'],
-      },
-      unhandledPromptBehavior: {
-        isString: true,
-        presence: false,
-        inclusion: ['dismiss', 'accept', 'dismiss and notify', 'accept and notify', 'ignore'],
-      },
+  readonly desiredCapConstraints = {
+    // W3C
+    timeouts: {
+      isObject: true,
+      presence: false,
+    },
+    acceptInsecureCerts: {
+      isBoolean: true,
+      presence: false,
+    },
+    pageLoadStrategy: {
+      isString: true,
+      presence: false,
+      inclusion: ['none', 'eager', 'normal', 'networkidle'],
+    },
+    unhandledPromptBehavior: {
+      isString: true,
+      presence: false,
+      inclusion: ['dismiss', 'accept', 'dismiss and notify', 'accept and notify', 'ignore'],
+    },
 
-      // Playwright
-      'playwright:browser': {
-        isObject: true,
-        presence: false,
-      },
-      'playwright:context': {
-        isObject: true,
-        presence: false,
-      },
-    };
+    // Playwright
+    'playwright:browser': {
+      isObject: true,
+      presence: false,
+    },
+    'playwright:context': {
+      isObject: true,
+      presence: false,
+    },
   }
 }

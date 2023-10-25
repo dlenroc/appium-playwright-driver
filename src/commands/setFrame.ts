@@ -1,4 +1,4 @@
-import type { Element } from '@appium/base-driver';
+import type { Element } from '@appium/types';
 import { errors } from '@appium/base-driver';
 import type { Frame } from 'playwright';
 import type { Driver } from '../Driver';
